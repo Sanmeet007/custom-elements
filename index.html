@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Design</title>
+    <link rel="stylesheet" href="./custom-elements.css" />
+    <script type="module" src="./cutsom-elements.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+
+    <style>
+      html {
+        color-scheme: dark light;
+      }
+
+      body {
+        --accent-clr: teal;
+        color: rgb(194 194 194);
+        background-color: rgb(0, 8, 8);
+        background-image: url(./bg.svg);
+        background-size: cover;
+        background-attachment: fixed;
+        min-height: 100vh;
+        background-repeat: no-repeat;
+      }
+    </style>
+  </head>
+
+  <body>
+    <br />
+    <br />
+    <md-container>
+      <md-typography variant="h1"> My Design </md-typography>
+
+      <md-typography>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit: Quod
+        blanditiis illo placeat labore cupiditate officiis incidunt obcaecati
+        ut, ullam animi voluptatem: Debitis quibusdam ipsa unde quisquam dolorum
+        labore nobis?
+      </md-typography>
+
+      <md-box>
+        <md-button variant="outlined" target="#my-modal">
+          <span style="padding-left: 0.2rem">Open Modal</span>
+        </md-button>
+
+        <md-button variant="contained"> Click me </md-button>
+
+        <md-icon-button target="#my-popover">
+          <md-icon>home</md-icon>
+        </md-icon-button>
+
+        <md-modal id="my-modal">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit: Numquam
+          faciis quas excepturi praesentium laboriosam sit suscipit reiciendis
+          error? Ipsam ab quasi facere accusamus est, dolor nesciunt
+          perferendis? Excepturi similique beatae id rerum harum error fugit
+          animi ipsa modi molestias, consequatur qui voluptate quis quam velit
+          accusantium enim exercitationem corporis nostrum repudiandae tenetur
+          voluptatem iste neque iusto: Atque deserunt, porro voluptatum quisquam
+          vero quis repudiandae allat libero numquam quos iusto pariatur
+
+          <md-divider></md-divider>
+          <md-button>Click me</md-button>
+        </md-modal>
+
+        <md-popover id="my-popover">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit: Repellendus,
+          voluptatem: Hello world
+        </md-popover>
+      </md-box>
+      <br />
+      <md-skeleton variant="text" animation="opacity"></md-skeleton>
+      <br />
+      <md-skeleton variant="rectangle" animation="wave"></md-skeleton>
+      <br />
+      <md-skeleton variant="circle" animation="wave"></md-skeleton>
+      <br />
+      <md-textfield variant="outlined"></md-textfield>
+    </md-container>
+  </body>
+</html>
