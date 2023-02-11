@@ -124,7 +124,7 @@ template.innerHTML = `
 `;
 class Typography extends HTMLElement {
   static get observedAttributes() {
-    return ["variant"];
+    return ["variant", "sx", "margin", "m", "padding", "p", "color", "c"];
   }
 
   constructor() {
@@ -134,122 +134,137 @@ class Typography extends HTMLElement {
     });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
-  connectedCallback() { }
+
   attributeChangedCallback(attr, _, newval) {
     const typographyEl = this.shadowRoot.querySelector(".typography");
-    switch (attr) {
-      case "variant":
-        switch (newval) {
-          case "h1":
-            typographyEl.innerHTML = `
+
+    if (attr === "variant") {
+      switch (attr) {
+        case "variant":
+          switch (newval) {
+            case "h1":
+              typographyEl.innerHTML = `
             <h1>
               <slot></slot>
             </h1>
             `;
-            break;
+              break;
 
-          case "h2":
-            typographyEl.innerHTML = ` 
+            case "h2":
+              typographyEl.innerHTML = ` 
             <h2>
               <slot></slot>
             </h2>
             `;
-            break;
+              break;
 
-          case "h3":
-            typographyEl.innerHTML = ` 
+            case "h3":
+              typographyEl.innerHTML = ` 
             <h3>
               <slot></slot>
             </h3>
             `;
-            break;
+              break;
 
-          case "h4":
-            typographyEl.innerHTML = ` 
+            case "h4":
+              typographyEl.innerHTML = ` 
             <h4>
               <slot></slot>
             </h4>
             `;
-            break;
+              break;
 
-          case "h5":
-            typographyEl.innerHTML = ` 
+            case "h5":
+              typographyEl.innerHTML = ` 
             <h5>
               <slot></slot>
             </h5>
             `;
-            break;
+              break;
 
-          case "h6":
-            typographyEl.innerHTML = ` 
+            case "h6":
+              typographyEl.innerHTML = ` 
             <h6>
               <slot></slot>
             </h6>
             `;
-            break;
+              break;
 
-          case "p":
-            typographyEl.innerHTML = ` 
+            case "p":
+              typographyEl.innerHTML = ` 
             <p>
               <slot></slot>
             </p>
             `;
-            break;
+              break;
 
-          case "subtitle1":
-            typographyEl.innerHTML = `<div class="subtitle1">
+            case "subtitle1":
+              typographyEl.innerHTML = `<div class="subtitle1">
               <slot />
             </div>`;
-            break;
+              break;
 
-          case "subtitle2":
-            typographyEl.innerHTML = `<div class="subtitle2">
+            case "subtitle2":
+              typographyEl.innerHTML = `<div class="subtitle2">
                 <slot />
               </div>`;
-            break;
+              break;
 
-          case "body1":
-            typographyEl.innerHTML = `<div class="body1">
+            case "body1":
+              typographyEl.innerHTML = `<div class="body1">
               <slot />
             </div>`;
-            break;
+              break;
 
-          case "body2":
-            typographyEl.innerHTML = `<div class="body2">
+            case "body2":
+              typographyEl.innerHTML = `<div class="body2">
                 <slot />
               </div>`;
-            break;
+              break;
 
-          case "span":
-            typographyEl.innerHTML = `<span>
+            case "span":
+              typographyEl.innerHTML = `<span>
                   <slot />
                 </span>`;
-            break;
-          case "button-text":
-            typographyEl.innerHTML = `<div class="button-text">
+              break;
+            case "button-text":
+              typographyEl.innerHTML = `<div class="button-text">
                   <slot />
                 </div>`;
-            break;
-          case "caption-text":
-            typographyEl.innerHTML = `<div class="caption-text">
+              break;
+            case "caption-text":
+              typographyEl.innerHTML = `<div class="caption-text">
                   <slot />
                 </div>`;
-            break;
-          case "overline-text":
-            typographyEl.innerHTML = `<div class="overline-text">
+              break;
+            case "overline-text":
+              typographyEl.innerHTML = `<div class="overline-text">
                   <slot />
                 </div>`;
-            break;
-          default:
-            typographyEl.innerHTML = `<p>
+              break;
+            default:
+              typographyEl.innerHTML = `<p>
                     <slot />
                   </p>`;
-            break;
-        }
-        break;
+              break;
+          }
+          break;
 
-      default:
-        break;
+        default:
+          break;
+      }
+    } else if (attr === "margin" || attr === "m") {
+      const nodeEl = typographyEl.querySelector("*");
+      nodeEl.style.margin = newval;
+    } else if (attr === "padding" || attr === "p") {
+      const nodeEl = typographyEl.querySelector("*");
+      nodeEl.style.padding = newval;
+    } else if (attr === "color" || attr === "c") {
+      const nodeEl = typographyEl.querySelector("*");
+      nodeEl.style.color = newval;
+    } else if (attr === "sx") {
+      const nodeEl = typographyEl.querySelector("*");
+      nodeEl.setAttribute("style", newval);
     }
   }
 }

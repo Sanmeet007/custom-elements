@@ -8,6 +8,6 @@ console.log(
   ██║ ╚═╝ ██║    ████████╔╝
   ╚═╝     ╚═╝    ╚═══════╝
   
-  \nTip : You can change \`accent color\` of every element using --accent-clr custom prop! !\n`,
+  \nTip : You can change \`accent color\` of every element using --accent-clr custom prop !\n`,
   " color : teal"
 );
