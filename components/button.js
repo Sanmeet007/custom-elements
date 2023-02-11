@@ -8,13 +8,6 @@ template.innerHTML = `
           font-size: inherit;
         }
         
-        :host{
-          --span-bg: black;
-          --span-opacity:0.2;
-          --accent-clr: inherit;
-          --text-clr :white;
-            display: inline-block;
-          }
 
           button{
             margin:0;
@@ -48,7 +41,6 @@ template.innerHTML = `
             background-color: var(--accent-clr);
             color:var(--text-clr);
             overflow:hidden;
-            border: 1px solid transparent;
         }
         button:not(:disabled):hover::after{
           content: "";
@@ -70,12 +62,12 @@ template.innerHTML = `
             width : 10px;
             height : 10px;
             inset:0;
-            animation : ripple 1.2s linear infinite;
+            animation : ripple 400ms linear infinite;
         }
 
         button:disabled,
         button[disabled="true"]{
-            cursor : auto;
+            cursor : not-allowed;
             background-color: #cccccc;
             color: #999;
             background : rgba(0, 0, 0, 0.12);
@@ -84,15 +76,14 @@ template.innerHTML = `
       
 
         .contained{
-          --span-bg :  black;
           --span-opacity: 0.1;
           color :var(--text-clr);
           background-color : var(--accent-clr);
-          box-shadow : 1px 1.5px 4px rgba(0,0,0,0.3);
         }
 
         .outlined{
           --span-bg: var(--accent-clr);
+          border: 0.1rem solid transparent;
           border-color:  var(--accent-clr);
           background-color :transparent;
           color : var(--accent-clr);
@@ -106,13 +97,14 @@ template.innerHTML = `
 
         .outlined-disabled{
           background: transparent!important;
+          border : 0.1rem solid transparent;
           border-color: currentColor !important;
         }
         .text-disabled{
           background: transparent!important;
         }
-        .contained-disabled{
-
+        .elevated{
+          box-shadow : 1px 1.5px 4px rgba(0,0,0,0.3);
         }
 
         @keyframes ripple{
@@ -130,6 +122,29 @@ template.innerHTML = `
                 cursor:auto;
             }
         }
+
+        @media screen and (prefers-color-scheme : dark){
+          :host{
+            --span-bg: black;
+            --span-opacity:0.2;
+            --accent-clr: inherit;
+            --text-clr : white ;
+              display: inline-block;
+            }
+        }
+
+        
+        @media screen and (prefers-color-scheme : light){
+          :host{
+            --span-bg: white;
+            --span-opacity:0.2;
+            --accent-clr: inherit;
+            --text-clr :white;
+              display: inline-block;
+            }
+        }
+
+
     </style>
 
     <!-- Elements -->
@@ -140,13 +155,13 @@ template.innerHTML = `
 
 class Button extends HTMLElement {
   static get observedAttributes() {
-    return ["variant", "wave", "elevation", "color", "disabled"];
+    return ["variant", "wave", "elevated", "color", "disabled", "type"];
   }
   get variant() {
     return this.getAttribute("variant");
   }
   get elevation() {
-    return this.getAttribute("elevation");
+    return this.getAttribute("elevated");
   }
   constructor() {
     super();
@@ -182,12 +197,12 @@ class Button extends HTMLElement {
 
         setTimeout(() => {
           spanEl.remove();
-        }, 1200);
+        }, 380);
       }
     });
   }
 
-  attributeChangedCallback(attr, oldval, newval) {
+  attributeChangedCallback(attr, _, newval) {
     const btnEl = this.shadowRoot.querySelector("button");
     let isdisabled = false;
     if (this.getAttribute("disabled") === "true") {
@@ -199,6 +214,9 @@ class Button extends HTMLElement {
     }
 
     switch (attr) {
+      case "type":
+        btnEl.setAttribute("type", newval);
+        break;
       case "disabled":
         if (newval === "true" || newval === "") {
           btnEl.setAttribute("disabled", true);
@@ -207,11 +225,11 @@ class Button extends HTMLElement {
         }
         break;
 
-      case "elevation":
+      case "elevated":
         if (newval === "true" || newval == "") {
-          btnEl.style.boxShadow = "2px 2px 6px rgba(0,0,0,0.4)";
+          btnEl.classList.add("elevated");
         } else {
-          btnEl.style.boxShadow = "none !important";
+          btnEl.classList.remove("elevated");
         }
         break;
 
@@ -239,6 +257,7 @@ class Button extends HTMLElement {
             break;
 
           case "contained":
+            btnEl.classList.add("elevated");
             if (!isdisabled) {
               btnEl.classList = null;
               btnEl.classList = ["contained"];

@@ -20,15 +20,21 @@
 
   <body>
     <md-container>
-      <form>
-        <md-textfield label="Email" name="email"></md-textfield>
-        <button type="submit">SUBMIT</button>
-      </form>
+      <md-form>
+        <md-textfield label="Username" name="email"></md-textfield>
+        <md-button variant="outlined" type="submit">SUBMIT</md-button>
+      </md-form>
     </md-container>
 
     <script>
       const textField = document.querySelector("md-textfield");
-      const form = document.querySelector("form");
+      const button = document.querySelector("md-button");
+
+      const form = document.querySelector("md-form");
+
+      button.addEventListener("click", (e) => {
+        console.log("Clicked");
+      });
 
       textField.addEventListener("change", (e) => {});
     </script>

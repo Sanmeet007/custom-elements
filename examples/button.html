@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Design</title>
+    <link rel="stylesheet" href="/custom-elements.css" />
+    <script type="module" src="/cutsom-elements.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <md-container>
+      <br />
+      <md-button variant="outlined">Outlined Button</md-button>
+      <md-button variant="outlined" disabled>Outlined Button</md-button>
+      <md-button variant="text">Text Button</md-button>
+      <md-button variant="text" disabled>Text disabled Button</md-button>
+      <md-button variant="contained" elevated type="submit"
+        >Contained Elevated button</md-button
+      >
+      <md-button variant="contained" elevated disabled type="submit"
+        >Contained Elevated button</md-button
+      >
+      <md-button variant="contained" type="submit">Contained Button</md-button>
+      <md-button>Default</md-button>
+      <md-button disabled>Default</md-button>
+    </md-container>
+
+    <script>
+      const buttons = document.querySelectorAll("md-button");
+
+      buttons.forEach((button) =>
+        button.addEventListener("click", (e) => {
+          console.log(e.target.variant);
+        })
+      );
+    </script>
+  </body>
+</html>

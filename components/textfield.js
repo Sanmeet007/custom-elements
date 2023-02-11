@@ -181,7 +181,7 @@ template.innerHTML = `
 class TextField extends HTMLElement {
     #changeEvent = new CustomEvent("change");
     static get observedAttributes() {
-        return [];
+        return ["name", "label"];
     }
 
     constructor() {
@@ -219,10 +219,16 @@ class TextField extends HTMLElement {
             this.dispatchEvent(this.#changeEvent);
         })
     }
+
     attributeChangedCallback(attr, _, newval) {
         if (attr === "name") {
             const input = this.shadowRoot.querySelector("input");
             input.setAttribute("name", newval);
+        } else if (attr === "label") {
+            const label = this.shadowRoot.querySelector("label");
+            const legend = this.shadowRoot.querySelector("legend");
+            label.textContent = newval;
+            legend.textContent = newval;
         }
     }
 }
