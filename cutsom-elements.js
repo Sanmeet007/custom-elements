@@ -5,7 +5,6 @@ import Modal from "./components/modal.js";
 import Divider from "./components/divider.js";
 import Skeleton from "./components/skeleton.js";
 import Typography from "./components/typography.js";
-import Theme from "./components/theme.js";
 import Popover from "./components/popover.js";
 import Icon from "./components/icon.js";
 import Container from "./components/container.js";
