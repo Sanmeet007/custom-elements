@@ -12,7 +12,7 @@ template.innerHTML = `
         color:inherit;
       }
       h1{
-        color:initial;
+        color: inherit;
         margin: 0px 0px 0.35em;
         font-weight: 300;
         font-size: 6rem;
@@ -20,7 +20,7 @@ template.innerHTML = `
         letter-spacing: -0.01562em;
       }
       h2{
-        color:initial;
+        color:inherit;
 
         margin: 0px 0px 0.35em;
         font-weight: 300;
@@ -29,8 +29,7 @@ template.innerHTML = `
         letter-spacing: -0.00833em;
       }
       h3{
-        color:initial;
-
+        color:inherit;
         margin: 0px 0px 0.35em;
         font-weight: 400;
         font-size: 3rem;
@@ -38,8 +37,7 @@ template.innerHTML = `
         letter-spacing: 0em;
       }
       h4{
-        color:initial;
-
+        color:inherit;
         margin: 0px 0px 0.35em;
         font-weight: 400;
         font-size: 2.125rem;
@@ -47,8 +45,7 @@ template.innerHTML = `
         letter-spacing: 0.00735em;
       }
       h5{
-        color:initial;
-
+        color:inherit;
         margin: 0px 0px 0.35em;
         font-weight: 400;
         font-size: 1.5rem;
@@ -56,8 +53,7 @@ template.innerHTML = `
         letter-spacing: 0em;
       }
       h6{
-        color:initial;
-
+        color:inherit;
         margin: 0px 0px 0.35em;
         font-weight: 500;
         font-size: 1.25rem;
