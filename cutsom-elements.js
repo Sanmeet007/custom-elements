@@ -1,7 +1,4 @@
 import Button from "./components/button.js";
-import FormElement from "./components/form-element.js";
-import Form from "./components/form.js";
-import Grid from "./components/grid.js";
 import IconButton from "./components/icon-button.js";
 import Box from "./components/box.js";
 import Modal from "./components/modal.js";
@@ -59,9 +56,6 @@ customElements.define(PREFIX + "-icon", Icon);
 customElements.define(PREFIX + "-button", Button);
 customElements.define(PREFIX + "-icon-button", IconButton);
 customElements.define(PREFIX + "-box", Box);
-customElements.define(PREFIX + "-form", Form);
-customElements.define(PREFIX + "-form-element", FormElement);
-customElements.define(PREFIX + "-grid", Grid);
 customElements.define(PREFIX + "-modal", Modal);
 customElements.define(PREFIX + "-popover", Popover);
 customElements.define(PREFIX + "-divider", Divider);

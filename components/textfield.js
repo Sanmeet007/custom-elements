@@ -5,7 +5,6 @@ template.innerHTML = `
     <style>
          :host{
              display: block;
-
          }
 
         .form-element {
@@ -180,36 +179,51 @@ template.innerHTML = `
     
 `;
 class TextField extends HTMLElement {
-  static get observedAttributes() {
-    return ["no"];
-  }
+    #changeEvent = new CustomEvent("change");
+    static get observedAttributes() {
+        return [];
+    }
 
-  constructor() {
-    super();
-    this.attachShadow({
-      mode: "open",
-    });
-    this.shadowRoot.appendChild(template.content.cloneNode(true));
-  }
-  connectedCallback() {
-    const input = this.shadowRoot.querySelector("input");
-    const label = this.shadowRoot.querySelector("label");
-    const legend = this.shadowRoot.querySelector("legend");
-    const fieldset = this.shadowRoot.querySelector("fieldset");
+    constructor() {
+        super();
+        this.attachShadow({
+            mode: "open",
+        });
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.value = "";
+    }
+    reset() {
+        this.value = "";
+        this.dispatchEvent(this.#changeEvent)
+    }
+    connectedCallback() {
+        const input = this.shadowRoot.querySelector("input");
+        const label = this.shadowRoot.querySelector("label");
+        const legend = this.shadowRoot.querySelector("legend");
+        const fieldset = this.shadowRoot.querySelector("fieldset");
 
-    input.addEventListener("focusin", () => {
-      label.classList.add("label-focused");
-      legend.classList.add("legend-focused");
-      fieldset.classList.add("fieldset-focused");
-    });
-    input.addEventListener("focusout", () => {
-      if (input.value === "") {
-        label.classList.remove("label-focused");
-        legend.classList.remove("legend-focused");
-      }
-      fieldset.classList.remove("fieldset-focused");
-    });
-  }
-  attributeChangedCallback(attr, oldval, newval) {}
+        input.addEventListener("focusin", () => {
+            label.classList.add("label-focused");
+            legend.classList.add("legend-focused");
+            fieldset.classList.add("fieldset-focused");
+        });
+        input.addEventListener("focusout", () => {
+            if (input.value === "") {
+                label.classList.remove("label-focused");
+                legend.classList.remove("legend-focused");
+            }
+            fieldset.classList.remove("fieldset-focused");
+        });
+        input.addEventListener("input", (e) => {
+            this.value = e.target.value;
+            this.dispatchEvent(this.#changeEvent);
+        })
+    }
+    attributeChangedCallback(attr, _, newval) {
+        if (attr === "name") {
+            const input = this.shadowRoot.querySelector("input");
+            input.setAttribute("name", newval);
+        }
+    }
 }
 export default TextField;
