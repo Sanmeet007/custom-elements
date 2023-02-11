@@ -116,7 +116,6 @@ template.innerHTML = `
         font-size: 0.75rem;
         line-height: 2.66;
         letter-spacing: 0.08333em;
-        text-transform: uppercase;
         display: block;
       }
     </style>
@@ -139,8 +138,8 @@ class Typography extends HTMLElement {
     });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
-  connectedCallback() {}
-  attributeChangedCallback(attr, oldval, newval) {
+  connectedCallback() { }
+  attributeChangedCallback(attr, _, newval) {
     const typographyEl = this.shadowRoot.querySelector(".typography");
     switch (attr) {
       case "variant":
@@ -229,6 +228,7 @@ class Typography extends HTMLElement {
             typographyEl.innerHTML = `<span>
                   <slot />
                 </span>`;
+            break;
           case "button-text":
             typographyEl.innerHTML = `<div class="button-text">
                   <slot />
