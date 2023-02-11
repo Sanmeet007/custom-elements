@@ -61,6 +61,5 @@ customElements.define(PREFIX + "-popover", Popover);
 customElements.define(PREFIX + "-divider", Divider);
 customElements.define(PREFIX + "-skeleton", Skeleton);
 customElements.define(PREFIX + "-typography", Typography);
-customElements.define(PREFIX + "-theme", Theme);
 customElements.define(PREFIX + "-container", Container);
 customElements.define(PREFIX + "-textfield", TextField);
