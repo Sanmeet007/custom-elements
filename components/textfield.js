@@ -199,6 +199,14 @@ class TextField extends HTMLElement {
         this._value = v;
     }
 
+    get type() {
+        return this._type;
+    }
+    set type(v) {
+        const input = this.shadowRoot.querySelector("input");
+        this.setAttribute("type", v);
+    }
+
     constructor() {
         super();
         this.attachShadow({
@@ -206,6 +214,7 @@ class TextField extends HTMLElement {
         });
         this.shadowRoot.appendChild(template.content.cloneNode(true));
         this._value = "";
+        this._type = "text";
     }
     reset() {
         this.value = "";
@@ -233,6 +242,12 @@ class TextField extends HTMLElement {
             this._value = e.target.value;
             this.dispatchEvent(this.#changeEvent);
         })
+        // input.addEventListener("keyup", (e) => {
+        //     if (e.key === "Enter") {
+        //         console.log(input.form)
+
+        //     }
+        // })
 
         const initialValue = this.getAttribute("initial");
         if (initialValue != "" && initialValue != null && initialValue != undefined) {

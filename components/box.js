@@ -13,13 +13,13 @@ template.innerHTML = `
     </style>
 
     <!-- Elements -->
-    <div>
+    <div class="box">
         <slot></slot>
     </div>
 `;
 class MdBox extends HTMLElement {
   static get observedAttributes() {
-    return ["no"];
+    return ["margin", "padding", "color", "m", "p", "c", "sx"];
   }
 
   constructor() {
@@ -28,6 +28,19 @@ class MdBox extends HTMLElement {
       mode: "open",
     });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
+  }
+
+  attributeChangedCallback(attr, _, newval) {
+    const div = this.shadowRoot.querySelector(".box");
+    if (attr === "m" || attr === "margin") {
+      div.style.margin = newval;
+    } else if (attr === "p" || attr === "padding") {
+      div.style.padding = newval;
+    } else if (attr === "c" || attr === "color") {
+      div.style.backgroundColor = newval;
+    } else if (attr === "sx") {
+      div.setAttribute("style", newval);
+    }
   }
 }
 export default MdBox;
