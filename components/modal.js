@@ -76,11 +76,16 @@ class Modal extends HTMLElement {
       mode: "open",
     });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
+    this.isopened = false;
   }
 
   connectedCallback() {
+    window.addEventListener("keyup", (e) => {
+      if (e.key === "Escape" && this.isopened) {
+        this.close();
+      }
+    })
     const backdrop = this.shadowRoot.querySelector(".backdrop");
-
     backdrop.addEventListener("click", () => {
       this.close();
     });
@@ -100,6 +105,7 @@ class Modal extends HTMLElement {
     switch (attr) {
       case "open":
         if (newval === "true" || newval === "") {
+          this.isopened = true;
           if (!backdrop.classList.contains("backdrop-visible")) {
             backdrop.classList.add("backdrop-visible");
           }
@@ -107,6 +113,7 @@ class Modal extends HTMLElement {
             modal.classList.add("modal-visible");
           }
         } else {
+          this.isopened = false;
           if (backdrop.classList.contains("backdrop-visible")) {
             backdrop.classList.remove("backdrop-visible");
           }

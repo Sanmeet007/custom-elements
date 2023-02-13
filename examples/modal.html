@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Design</title>
+    <link rel="stylesheet" href="/custom-elements.css" />
+    <script type="module" src="/cutsom-elements.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+
+    <style>
+      html {
+        color-scheme: dark light;
+      }
+
+      body {
+        --accent-clr: teal;
+      }
+    </style>
+  </head>
+
+  <body>
+    <br />
+    <br />
+    <md-container>
+      <md-box>
+        <md-button target="#my-modal">
+          <md-box>
+            <md-icon>home</md-icon>
+            <md-typography variant="span">Home</md-typography>
+          </md-box>
+        </md-button>
+
+        <md-modal id="my-modal">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit: Numquam
+          faciis quas excepturi praesentium laboriosam sit suscipit reiciendis
+          error? Ipsam ab quasi facere accusamus est, dolor nesciunt
+          perferendis? Excepturi similique beatae id rerum harum error fugit
+          animi ipsa modi molestias, consequatur qui voluptate quis quam velit
+          accusantium enim exercitationem corporis nostrum repudiandae tenetur
+          voluptatem iste neque iusto: Atque deserunt, porro voluptatum quisquam
+          vero quis repudiandae allat libero numquam quos iusto pariatur
+        </md-modal>
+      </md-box>
+    </md-container>
+  </body>
+</html>
