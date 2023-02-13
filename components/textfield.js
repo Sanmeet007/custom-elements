@@ -181,7 +181,22 @@ template.innerHTML = `
 class TextField extends HTMLElement {
     #changeEvent = new CustomEvent("change");
     static get observedAttributes() {
-        return ["name", "label"];
+        return ["name", "label", "type"];
+    }
+
+    get value() {
+        return this._value;
+    }
+
+    set value(v) {
+        const input = this.shadowRoot.querySelector("input");
+        const label = this.shadowRoot.querySelector("label");
+        const legend = this.shadowRoot.querySelector("legend");
+        label.classList.add("label-focused");
+        legend.classList.add("legend-focused");
+
+        input.value = v;
+        this._value = v;
     }
 
     constructor() {
@@ -190,7 +205,7 @@ class TextField extends HTMLElement {
             mode: "open",
         });
         this.shadowRoot.appendChild(template.content.cloneNode(true));
-        this.value = "";
+        this._value = "";
     }
     reset() {
         this.value = "";
@@ -215,9 +230,16 @@ class TextField extends HTMLElement {
             fieldset.classList.remove("fieldset-focused");
         });
         input.addEventListener("input", (e) => {
-            this.value = e.target.value;
+            this._value = e.target.value;
             this.dispatchEvent(this.#changeEvent);
         })
+
+        const initialValue = this.getAttribute("initial");
+        if (initialValue != "" && initialValue != null && initialValue != undefined) {
+            label.classList.add("label-focused");
+            legend.classList.add("legend-focused");
+            this.value = initialValue;
+        }
     }
 
     attributeChangedCallback(attr, _, newval) {
@@ -229,6 +251,9 @@ class TextField extends HTMLElement {
             const legend = this.shadowRoot.querySelector("legend");
             label.textContent = newval;
             legend.textContent = newval;
+        } else if (attr === "type") {
+            const input = this.shadowRoot.querySelector("input");
+            input.type = newval;
         }
     }
 }

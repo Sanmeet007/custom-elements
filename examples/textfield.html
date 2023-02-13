@@ -21,8 +21,9 @@
   <body>
     <md-container>
       <md-form>
-        <md-textfield label="Username" name="email"></md-textfield>
-        <md-button variant="outlined" type="submit">SUBMIT</md-button>
+        <br />
+        <md-textfield type="email" label="Username" name="email"></md-textfield>
+        <md-button type="submit">SUBMIT</md-button>
       </md-form>
     </md-container>
 
@@ -31,10 +32,15 @@
       const button = document.querySelector("md-button");
 
       const form = document.querySelector("md-form");
-
+      const inputEl = document.querySelector("md-textfield");
       button.addEventListener("click", (e) => {
-        console.log("Clicked");
+        console.log(inputEl.value);
       });
+      // let x = 1;
+      // setInterval(() => {
+      //   inputEl.value = x++;
+      //   // console.log(inputEl.value);
+      // }, 1000);
 
       textField.addEventListener("change", (e) => {});
     </script>
