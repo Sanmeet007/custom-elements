@@ -19,7 +19,7 @@ template.innerHTML = `
 `;
 class MdBox extends HTMLElement {
   static get observedAttributes() {
-    return ["margin", "padding", "color", "m", "p", "c", "sx", "display", "d", "gap", "g", "direction", "dir"];
+    return ["margin", "padding", "color", "m", "p", "c", "sx", "display", "d", "gap", "g", "direction", "dir", "maxwidth", "minwidth", "w", "width", "height", "h", "radius", "r"];
   }
 
   constructor() {
@@ -46,6 +46,16 @@ class MdBox extends HTMLElement {
       div.style.gap = newval;
     } else if (attr === "direction" || attr === "dir") {
       div.style.flexDirection = newval;
+    } else if (attr === "maxwidth") {
+      div.style.maxWidth = newval;
+    } else if (attr === "minwidth") {
+      div.style.minWdith = newval;
+    } else if (attr === "height" || attr === "h") {
+      div.style.height = newval;
+    } else if (attr === "width" || attr === "w") {
+      div.style.width = newval;
+    } else if (attr === "radius" || attr === "r") {
+      div.style.borderRadius = newval;
     }
   }
 }

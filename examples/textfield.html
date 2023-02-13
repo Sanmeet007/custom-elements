@@ -21,11 +21,12 @@
   <body>
     <md-container>
       <md-box
-        margin="10px 0 0 0"
+        m="10px 0 0 0"
         c="#222"
         p="1rem"
         d="flex"
         g="1rem"
+        r="10px"
         dir="column"
       >
         <md-textfield
@@ -34,12 +35,16 @@
           fullwidth
           label="Username"
         ></md-textfield>
-        <md-textfield type="email" label="Email"></md-textfield>
-        <md-icon-button>
-          <md-icon>home</md-icon>
-        </md-icon-button>
-        <md-button type="submit">SUBMIT</md-button>
-        <md-button type="reset">Reset</md-button>
+        <md-textfield
+          type="email"
+          autocomplete="false"
+          label="Email"
+          fullwidth
+        ></md-textfield>
+        <md-box d="flex" g="0.5rem">
+          <md-button type="submit">SUBMIT</md-button>
+          <md-button type="reset">Reset</md-button>
+        </md-box>
       </md-box>
     </md-container>
 
