@@ -11,7 +11,7 @@ template.innerHTML = `
          align-items: center;
          margin : 0!important;
          padding : 0!important;
-         height: 15px;
+         height: 20px;
          color: inherit;
          overflow: hidden;
        }
@@ -58,7 +58,7 @@ class Icon extends HTMLElement {
     });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
-  connectedCallback() {}
+  connectedCallback() { }
   attributeChangedCallback(attr, oldval, newval) {
     const spanEl = this.shadowRoot.querySelector("span");
     switch (attr) {
