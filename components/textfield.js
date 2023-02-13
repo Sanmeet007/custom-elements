@@ -71,7 +71,6 @@ template.innerHTML = `
             margin: 0px;
             -webkit-tap-highlight-color: transparent;
             display: block;
-            min-width: 0px;
             width: 100%;
             animation-name: animate;
             animation-duration: 10ms;
@@ -162,6 +161,9 @@ template.innerHTML = `
         .form-element:focus-within > label{
             color: var(--accent-clr)
         }
+        .form-element.fullwidth{
+            width: 100% ;
+        }
         </style>
         
         <!-- Elements -->
@@ -181,7 +183,7 @@ template.innerHTML = `
 class TextField extends HTMLElement {
     #changeEvent = new CustomEvent("change");
     static get observedAttributes() {
-        return ["name", "label", "type"];
+        return ["name", "label", "type", "autocomplete", "maxlength", "max", "min", "step", "fullwidth"];
     }
 
     get value() {
@@ -192,8 +194,13 @@ class TextField extends HTMLElement {
         const input = this.shadowRoot.querySelector("input");
         const label = this.shadowRoot.querySelector("label");
         const legend = this.shadowRoot.querySelector("legend");
-        label.classList.add("label-focused");
-        legend.classList.add("legend-focused");
+        if (v === "") {
+            label.classList.remove("label-focused");
+            legend.classList.remove("legend-focused");
+        } else {
+            label.classList.add("label-focused");
+            legend.classList.add("legend-focused");
+        }
 
         input.value = v;
         this._value = v;
@@ -203,7 +210,6 @@ class TextField extends HTMLElement {
         return this._type;
     }
     set type(v) {
-        const input = this.shadowRoot.querySelector("input");
         this.setAttribute("type", v);
     }
 
@@ -242,13 +248,6 @@ class TextField extends HTMLElement {
             this._value = e.target.value;
             this.dispatchEvent(this.#changeEvent);
         })
-        // input.addEventListener("keyup", (e) => {
-        //     if (e.key === "Enter") {
-        //         console.log(input.form)
-
-        //     }
-        // })
-
         const initialValue = this.getAttribute("initial");
         if (initialValue != "" && initialValue != null && initialValue != undefined) {
             label.classList.add("label-focused");
@@ -258,17 +257,31 @@ class TextField extends HTMLElement {
     }
 
     attributeChangedCallback(attr, _, newval) {
+        const div = this.shadowRoot.querySelector(".form-element");
+        const input = this.shadowRoot.querySelector("input");
+        const label = this.shadowRoot.querySelector("label");
+        const legend = this.shadowRoot.querySelector("legend");
+
+        if (attr === "fullwidth") {
+            div.classList.add("fullwidth");
+        }
+
         if (attr === "name") {
             const input = this.shadowRoot.querySelector("input");
             input.setAttribute("name", newval);
         } else if (attr === "label") {
-            const label = this.shadowRoot.querySelector("label");
-            const legend = this.shadowRoot.querySelector("legend");
             label.textContent = newval;
             legend.textContent = newval;
         } else if (attr === "type") {
-            const input = this.shadowRoot.querySelector("input");
             input.type = newval;
+        } else if (attr === "autocomplete") {
+            if (newval === "false" || newval == "off") {
+                input.autocomplete = "off";
+            } else {
+                input.autocomplete = "on"
+            }
+        } else {
+            input.setAttribute(attr, newval);
         }
     }
 }

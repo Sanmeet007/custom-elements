@@ -7,7 +7,7 @@ template.innerHTML = `
           font-family:inherit;
           font-size: inherit;
         }
-        
+
 
           button{
             margin:0;
@@ -131,6 +131,9 @@ template.innerHTML = `
             --text-clr : white ;
               display: inline-block;
             }
+            button:focus{
+              outline: 1px solid white;
+            }
         }
 
         
@@ -141,6 +144,9 @@ template.innerHTML = `
             --accent-clr: inherit;
             --text-clr :white;
               display: inline-block;
+            }
+            button:focus{
+              outline: 1px solid black;
             }
         }
 
@@ -163,6 +169,11 @@ class Button extends HTMLElement {
   get elevation() {
     return this.getAttribute("elevated");
   }
+
+  set form(v) {
+    this.querySelector("button").setAttribute("form", v);
+  }
+
   constructor() {
     super();
     this.attachShadow({
@@ -175,6 +186,14 @@ class Button extends HTMLElement {
     const d = this.shadowRoot;
     const btnEl = d.querySelector("button");
     btnEl.addEventListener("click", (e) => {
+      const form = this.closest('form');
+      if (form != null) {
+        if (btnEl.type === "submit") {
+          form.dispatchEvent(new Event('submit'));
+        } else if (btnEl.type === "reset") {
+          this.closest('form').dispatchEvent(new Event('reset'));
+        }
+      }
       const x = e.offsetX + "px";
       const y = e.offsetY + "px";
 

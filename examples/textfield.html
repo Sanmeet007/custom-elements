@@ -20,22 +20,29 @@
 
   <body>
     <md-container>
-      <md-form>
-        <br />
-        <md-textfield type="text" label="Username" name="email"></md-textfield>
+      <md-box margin="10px 0 0 0" c="#222" p="1rem">
+        <md-textfield
+          type="text"
+          autocomplete="false"
+          fullwidth
+          label="Username"
+        ></md-textfield>
+        <md-textfield
+          type="email"
+          autocomplete="false"
+          label="Email"
+        ></md-textfield>
         <md-button type="submit">SUBMIT</md-button>
-      </md-form>
+        <md-button type="reset">Reset</md-button>
+      </md-box>
     </md-container>
 
     <script>
       const textField = document.querySelector("md-textfield");
       const button = document.querySelector("md-button");
 
-      const form = document.querySelector("md-form");
+      const form = document.querySelector("form");
       const inputEl = document.querySelector("md-textfield");
-      button.addEventListener("click", (e) => {
-        console.log(inputEl.value);
-      });
 
       textField.addEventListener("change", (e) => {});
     </script>
