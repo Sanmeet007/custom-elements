@@ -39,7 +39,7 @@ class MdBox extends HTMLElement {
     } else if (attr === "c" || attr === "color") {
       div.style.backgroundColor = newval;
     } else if (attr === "sx") {
-      div.setAttribute("style", newval);
+      div.style.cssText += newval;
     }
   }
 }

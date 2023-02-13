@@ -264,7 +264,7 @@ class Typography extends HTMLElement {
       nodeEl.style.color = newval;
     } else if (attr === "sx") {
       const nodeEl = typographyEl.querySelector("*");
-      nodeEl.setAttribute("style", newval);
+      nodeEl.style.cssText += newval;
     }
   }
 }
