@@ -131,8 +131,8 @@ template.innerHTML = `
             --text-clr : white ;
               display: inline-block;
             }
-            button:focus{
-              outline: 1px solid white;
+            button:focus-visible{
+              outline: 1px solid black;
             }
         }
 
@@ -145,7 +145,7 @@ template.innerHTML = `
             --text-clr :white;
               display: inline-block;
             }
-            button:focus{
+            button:focus-visible{
               outline: 1px solid black;
             }
         }
