@@ -19,7 +19,7 @@ template.innerHTML = `
 `;
 class MdBox extends HTMLElement {
   static get observedAttributes() {
-    return ["margin", "padding", "color", "m", "p", "c", "sx"];
+    return ["margin", "padding", "color", "m", "p", "c", "sx", "display", "d", "gap", "g", "direction", "dir"];
   }
 
   constructor() {
@@ -40,6 +40,12 @@ class MdBox extends HTMLElement {
       div.style.backgroundColor = newval;
     } else if (attr === "sx") {
       div.style.cssText += newval;
+    } else if (attr === "display" || attr === "d") {
+      div.style.display = newval;
+    } else if (attr === "gap" || attr === "g") {
+      div.style.gap = newval;
+    } else if (attr === "direction" || attr === "dir") {
+      div.style.flexDirection = newval;
     }
   }
 }
