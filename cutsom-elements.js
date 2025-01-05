@@ -14,6 +14,7 @@ import "./components/index.js";
 const PREFIX = "md";
 
 const targetElms = document.querySelectorAll("[target]");
+const closeTargetElms = document.querySelectorAll("[close-target]");
 
 targetElms.forEach((el) => {
   if (el.tagName.toUpperCase() !== "A") {
@@ -43,6 +44,24 @@ targetElms.forEach((el) => {
           targetEl.setAttribute("open", false);
         } else {
           targetEl.setAttribute("open", true);
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+});
+
+closeTargetElms.forEach((el) => {
+  if (el.tagName.toUpperCase() !== "A") {
+    const targetQuery = el.getAttribute("close-target");
+    try {
+      const targetEl = document.querySelector(targetQuery);
+      el.addEventListener("click", (e) => {
+        if (targetEl === null || targetEl === undefined)
+          throw new Error("Element not found!");
+        else {
+          targetEl.setAttribute("open", false);
         }
       });
     } catch (e) {

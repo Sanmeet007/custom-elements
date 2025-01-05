@@ -87,7 +87,7 @@
           information or asking users to confirm actions.
         </md-typography>
         <md-divider></md-divider>
-        <md-button variant="contained">Close Modal</md-button>
+        <md-button variant="contained" close-target="#demo-modal">Close Modal</md-button>
       </md-modal>
 
       <!-- Popover -->
@@ -98,7 +98,7 @@
       <!-- Textfield -->
       <md-typography variant="h3">Enter Your Details</md-typography>
       <md-box w="100%">
-        <form action="/index.html">
+        <form>
           <md-textfield
             type="text"
             autocomplete="false"
@@ -119,6 +119,7 @@
             multiline
             fullwidth
           ></md-textfield>
+          <md-button disabled>Disabled</md-button>
           <md-button type="reset">Reset</md-button>
           <md-button type="submit">Submit</md-button>
         </form>
