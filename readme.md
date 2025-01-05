@@ -135,7 +135,7 @@ Here’s how to use **My Design** in your project:
    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
 
    <!-- Add this before the closing </body> tag to include the custom elements script -->
-   <script src="custom-elements.js"></script>
+   <script type="module" src="custom-elements.js"></script>
    ```
 
 3. Start using components in your HTML:  
