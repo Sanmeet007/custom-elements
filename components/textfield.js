@@ -1,14 +1,13 @@
 const template = document.createElement("template");
 template.innerHTML = `
     <!-- Styles -->
-    
     <style>
-         :host{
-             display: block;
-         }
+        :host {
+            display: block;
+        }
 
         .form-element {
-            isolation:isolate;
+            isolation: isolate;
             z-index: 0;
             display: inline-flex;
             flex-direction: column;
@@ -21,7 +20,7 @@ template.innerHTML = `
         }
 
         label {
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--label-color, rgba(255, 255, 255, 0.7));
             font-family: Roboto, Helvetica, Arial, sans-serif;
             font-weight: 400;
             font-size: 1rem;
@@ -53,28 +52,29 @@ template.innerHTML = `
             box-sizing: border-box;
             cursor: text;
             display: inline-flex;
-            -webkit-box-align: center;
             align-items: center;
             position: relative;
             border-radius: 4px;
         }
 
-        input {
+        input,
+        textarea {
             outline: none;
             font: inherit;
             letter-spacing: inherit;
-            color: currentcolor;
+            color: var(--text-color, currentcolor);
             border: 0px;
             box-sizing: content-box;
             background: none;
-            height: 1.4375em;
             margin: 0px;
             -webkit-tap-highlight-color: transparent;
             display: block;
             width: 100%;
-            animation-name: animate;
-            animation-duration: 10ms;
             padding: 16.5px 14px;
+        }
+
+        textarea {
+            resize: none;
         }
 
         fieldset {
@@ -89,7 +89,7 @@ template.innerHTML = `
             border-width: 1px;
             overflow: hidden;
             min-width: 0%;
-            border-color: rgba(255, 255, 255, 0.23);
+            border-color: var(--border-color, rgba(255, 255, 255, 0.23));
         }
 
         legend {
@@ -105,68 +105,40 @@ template.innerHTML = `
             white-space: nowrap;
         }
 
-        legend>span {
+        legend > span {
             padding-left: 5px;
             padding-right: 5px;
             display: inline-block;
         }
 
         .label-focused {
-            color: rgba(255, 255, 255, 0.7);
-            font-family: Roboto, Helvetica, Arial, sans-serif;
-            font-weight: 400;
-            font-size: 1rem;
-            line-height: 1.4375em;
-            letter-spacing: 0.00938em;
-            padding: 0px;
-            display: block;
-            transform-origin: left top;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: calc(133% - 24px);
-            position: absolute;
-            left: 0px;
-            top: 0px;
+            color: var(--label-focus-color, var(--label-color, rgba(255, 255, 255, 0.7)));
             transform: translate(14px, -9px) scale(0.75);
-            transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-            z-index: 1;
-            pointer-events: auto;
-            user-select: none;
         }
 
         .legend-focused {
-            float: unset;
-            display: block;
-            width: auto;
-            padding: 0px;
-            height: 11px;
-            font-size: 0.75em;
-            visibility: hidden;
             max-width: 100%;
             transition: max-width 100ms cubic-bezier(0, 0, 0.2, 1) 50ms;
-            white-space: nowrap;
         }
 
         .fieldset-focused {
             border-color: var(--accent-clr);
         }
-        
-        @keyframes animate {
-            0% {
-                display: block;
-            }
+
+        .form-element:focus-within > label {
+            color: var(--accent-clr);
         }
 
-        .form-element:focus-within > label{
-            color: var(--accent-clr)
+        .form-element.fullwidth {
+            width: 100%;
         }
-        .form-element.fullwidth{
-            width: 100% ;
-        }
-        </style>
         
-        <!-- Elements -->
+        .required-asterisk{
+            color: var(--required-color,red);
+        }
+    </style>
+
+    <!-- Elements -->
     <div class="form-element">
         <label data-shrink="false" for="outlined-basic" id="outlined-basic-label">Outlined</label>
         <div class="element">
@@ -176,113 +148,142 @@ template.innerHTML = `
             </fieldset>
         </div>
     </div>
-
- 
-    
 `;
+
 class TextField extends HTMLElement {
-    #changeEvent = new CustomEvent("change");
-    static get observedAttributes() {
-        return ["name", "label", "type", "autocomplete", "maxlength", "max", "min", "step", "fullwidth"];
+  #changeEvent = new CustomEvent("change");
+
+  static get observedAttributes() {
+    return [
+      "name",
+      "label",
+      "type",
+      "autocomplete",
+      "maxlength",
+      "max",
+      "min",
+      "step",
+      "fullwidth",
+      "multiline",
+      "rows",
+      "cols",
+    ];
+  }
+
+  get value() {
+    return this._value;
+  }
+
+  set value(v) {
+    const input =
+      this.shadowRoot.querySelector("input") ||
+      this.shadowRoot.querySelector("textarea");
+    const label = this.shadowRoot.querySelector("label");
+    const legend = this.shadowRoot.querySelector("legend");
+    if (v === "") {
+      label.classList.remove("label-focused");
+      legend.classList.remove("legend-focused");
+    } else {
+      label.classList.add("label-focused");
+      legend.classList.add("legend-focused");
     }
 
-    get value() {
-        return this._value;
+    input.value = v;
+    this._value = v;
+  }
+
+  constructor() {
+    super();
+    this.attachShadow({
+      mode: "open",
+    });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+    this._value = "";
+  }
+
+  reset() {
+    this.value = "";
+    this.dispatchEvent(this.#changeEvent);
+  }
+
+  connectedCallback() {
+    const input =
+      this.shadowRoot.querySelector("input") ||
+      this.shadowRoot.querySelector("textarea");
+    const label = this.shadowRoot.querySelector("label");
+    const legend = this.shadowRoot.querySelector("legend");
+    const fieldset = this.shadowRoot.querySelector("fieldset");
+
+    input.addEventListener("focusin", () => {
+      label.classList.add("label-focused");
+      legend.classList.add("legend-focused");
+      fieldset.classList.add("fieldset-focused");
+    });
+    input.addEventListener("focusout", () => {
+      if (input.value === "") {
+        label.classList.remove("label-focused");
+        legend.classList.remove("legend-focused");
+      }
+      fieldset.classList.remove("fieldset-focused");
+    });
+    input.addEventListener("input", (e) => {
+      this._value = e.target.value;
+      this.dispatchEvent(this.#changeEvent);
+    });
+
+    const initialValue = this.getAttribute("initial");
+    if (initialValue) {
+      label.classList.add("label-focused");
+      legend.classList.add("legend-focused");
+      this.value = initialValue;
     }
 
-    set value(v) {
-        const input = this.shadowRoot.querySelector("input");
-        const label = this.shadowRoot.querySelector("label");
-        const legend = this.shadowRoot.querySelector("legend");
-        if (v === "") {
-            label.classList.remove("label-focused");
-            legend.classList.remove("legend-focused");
-        } else {
-            label.classList.add("label-focused");
-            legend.classList.add("legend-focused");
-        }
+    if (this.hasAttribute("required")) {
+      input.setAttribute("required", "true");
+      label.innerHTML = `${label.textContent} <span class="required-asterisk">*</span>`;
+      legend.textContent = `${legend.textContent} ***`;
+    }
+  }
 
-        input.value = v;
-        this._value = v;
+  attributeChangedCallback(attr, _, newval) {
+    const div = this.shadowRoot.querySelector(".form-element");
+    const input =
+      this.shadowRoot.querySelector("input") ||
+      this.shadowRoot.querySelector("textarea");
+    const label = this.shadowRoot.querySelector("label");
+    const legend = this.shadowRoot.querySelector("legend");
+
+    if (attr === "multiline") {
+      const textarea = document.createElement("textarea");
+      textarea.setAttribute("rows", this.getAttribute("rows") || 3);
+      textarea.setAttribute("cols", this.getAttribute("cols") || 20);
+      textarea.value = this._value;
+      div.querySelector(".element").replaceChild(textarea, input);
     }
 
-    get type() {
-        return this._type;
-    }
-    set type(v) {
-        this.setAttribute("type", v);
-    }
-
-    constructor() {
-        super();
-        this.attachShadow({
-            mode: "open",
-        });
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
-        this._value = "";
-        this._type = "text";
-    }
-    reset() {
-        this.value = "";
-        this.dispatchEvent(this.#changeEvent)
-    }
-    connectedCallback() {
-        const input = this.shadowRoot.querySelector("input");
-        const label = this.shadowRoot.querySelector("label");
-        const legend = this.shadowRoot.querySelector("legend");
-        const fieldset = this.shadowRoot.querySelector("fieldset");
-
-        input.addEventListener("focusin", () => {
-            label.classList.add("label-focused");
-            legend.classList.add("legend-focused");
-            fieldset.classList.add("fieldset-focused");
-        });
-        input.addEventListener("focusout", () => {
-            if (input.value === "") {
-                label.classList.remove("label-focused");
-                legend.classList.remove("legend-focused");
-            }
-            fieldset.classList.remove("fieldset-focused");
-        });
-        input.addEventListener("input", (e) => {
-            this._value = e.target.value;
-            this.dispatchEvent(this.#changeEvent);
-        })
-        const initialValue = this.getAttribute("initial");
-        if (initialValue != "" && initialValue != null && initialValue != undefined) {
-            label.classList.add("label-focused");
-            legend.classList.add("legend-focused");
-            this.value = initialValue;
-        }
+    if (attr === "rows" || attr === "cols") {
+      if (this.hasAttribute("multiline")) {
+        input.setAttribute(attr, newval);
+      }
     }
 
-    attributeChangedCallback(attr, _, newval) {
-        const div = this.shadowRoot.querySelector(".form-element");
-        const input = this.shadowRoot.querySelector("input");
-        const label = this.shadowRoot.querySelector("label");
-        const legend = this.shadowRoot.querySelector("legend");
-
-        if (attr === "fullwidth") {
-            div.classList.add("fullwidth");
-        }
-
-        if (attr === "name") {
-            const input = this.shadowRoot.querySelector("input");
-            input.setAttribute("name", newval);
-        } else if (attr === "label") {
-            label.textContent = newval;
-            legend.textContent = newval;
-        } else if (attr === "type") {
-            input.type = newval;
-        } else if (attr === "autocomplete") {
-            if (newval === "false" || newval == "off") {
-                input.autocomplete = "off";
-            } else {
-                input.autocomplete = "on"
-            }
-        } else {
-            input.setAttribute(attr, newval);
-        }
+    if (attr === "fullwidth") {
+      div.classList.add("fullwidth");
     }
+
+    if (attr === "name") {
+      input.setAttribute("name", newval);
+    } else if (attr === "label") {
+      label.textContent = newval;
+      legend.querySelector("span").textContent = newval;
+    } else if (attr === "type" && this.hasAttribute("multiline")) {
+      input.type = newval;
+    } else if (attr === "autocomplete") {
+      input.autocomplete =
+        newval === "false" || newval === "off" ? "off" : "on";
+    } else {
+      input.setAttribute(attr, newval);
+    }
+  }
 }
 export default TextField;
