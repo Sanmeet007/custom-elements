@@ -185,11 +185,12 @@ class Button extends HTMLElement {
   connectedCallback() {
     const d = this.shadowRoot;
     const btnEl = d.querySelector("button");
+    
     btnEl.addEventListener("click", (e) => {
       const form = this.closest('form');
       if (form != null) {
         if (btnEl.type === "submit") {
-          form.dispatchEvent(new Event('submit'));
+          form.requestSubmit();
         } else if (btnEl.type === "reset") {
           this.closest('form').dispatchEvent(new Event('reset'));
         }

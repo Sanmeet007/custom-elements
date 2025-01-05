@@ -13,12 +13,37 @@
     />
 
     <style>
-      html {
-        color-scheme: dark light;
-      }
-
       body {
         --accent-clr: teal;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      md-container {
+        padding: 2rem;
+        margin: 2rem auto;
+        max-width: 800px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      md-box {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      md-divider {
+        margin: 2rem 0;
+      }
+      md-textfield {
+        margin-top: 1rem;
+        --text-color: black;
+        --border-color: black;
+        --label-color: black;
+      }
+      .center {
+        text-align: center;
       }
     </style>
   </head>
@@ -27,45 +52,91 @@
     <br />
     <br />
     <md-container>
-      <md-typography variant="h1"> My Design </md-typography>
-
+      <!-- Typography -->
+      <md-typography variant="h1" class="center"
+        >Welcome to My Design</md-typography
+      >
+      <md-typography variant="h2">Explore Custom Elements</md-typography>
       <md-typography>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit: Quod
-        blanditiis illo placeat labore cupiditate officiis incidunt obcaecati
-        ut, ullam animi voluptatem: Debitis quibusdam ipsa unde quisquam dolorum
-        labore nobis?
+        This is a demo showcasing the power of custom elements built with Shadow
+        DOM. You can use these reusable components for seamless UI development.
       </md-typography>
 
+      <!-- Divider -->
+      <md-divider></md-divider>
+
+      <!-- Buttons -->
       <md-box>
-        <md-button variant="outlined" target="#my-modal">
-          <span style="padding-left: 0.2rem">Open Modal</span>
-        </md-button>
-
-        <md-button variant="contained"> Click me </md-button>
-
-        <md-icon-button target="#my-popover">
-          <md-icon>home</md-icon>
+        <md-button variant="contained">Primary Button</md-button>
+        <md-button variant="outlined">Outlined Button</md-button>
+        <md-icon-button target="#info-popover">
+          <md-icon>info</md-icon>
         </md-icon-button>
-
-        <md-modal id="my-modal">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit: Numquam
-          faciis quas excepturi praesentium laboriosam sit suscipit reiciendis
-          error? Ipsam ab quasi facere accusamus est, dolor nesciunt
-          perferendis? Excepturi similique beatae id rerum harum error fugit
-          animi ipsa modi molestias, consequatur qui voluptate quis quam velit
-          accusantium enim exercitationem corporis nostrum repudiandae tenetur
-          voluptatem iste neque iusto: Atque deserunt, porro voluptatum quisquam
-          vero quis repudiandae allat libero numquam quos iusto pariatur
-
-          <md-divider></md-divider>
-          <md-button>Click me</md-button>
-        </md-modal>
-
-        <md-popover id="my-popover">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit: Repellendus,
-          voluptatem: Hello world
-        </md-popover>
       </md-box>
+
+      <!-- Modal -->
+      <md-box>
+        <md-button variant="outlined" target="#demo-modal"
+          >Open Modal</md-button
+        >
+      </md-box>
+      <md-modal id="demo-modal">
+        <md-typography variant="h3">Modal Title</md-typography>
+        <md-typography>
+          This is a modal component. Modals are great for showing important
+          information or asking users to confirm actions.
+        </md-typography>
+        <md-divider></md-divider>
+        <md-button variant="contained">Close Modal</md-button>
+      </md-modal>
+
+      <!-- Popover -->
+      <md-popover id="info-popover">
+        <md-typography>Here is some popover content!</md-typography>
+      </md-popover>
+
+      <!-- Textfield -->
+      <md-typography variant="h3">Enter Your Details</md-typography>
+      <md-box w="100%">
+        <form action="/index.html">
+          <md-textfield
+            type="text"
+            autocomplete="false"
+            fullwidth
+            label="Name"
+          ></md-textfield>
+          <md-textfield
+            type="text"
+            autocomplete="false"
+            fullwidth
+            label="Email"
+          ></md-textfield>
+          <md-textfield
+            required
+            type="text"
+            autocomplete="false"
+            label="Message"
+            multiline
+            fullwidth
+          ></md-textfield>
+          <md-button type="reset">Reset</md-button>
+          <md-button type="submit">Submit</md-button>
+        </form>
+      </md-box>
+
+      <!-- Skeleton -->
+      <md-typography variant="h3">Loading Component</md-typography>
+      <md-skeleton animation="opacity" variant="circle"></md-skeleton>
+      <md-skeleton animation="wave" variant="rectangle"></md-skeleton>
+      <md-skeleton animation="opacity" variant="text"></md-skeleton>
     </md-container>
+
+    <script>
+      const form = document.querySelector("form");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        console.log("submitted!");
+      });
+    </script>
   </body>
 </html>

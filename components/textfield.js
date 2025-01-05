@@ -214,6 +214,17 @@ class TextField extends HTMLElement {
     const legend = this.shadowRoot.querySelector("legend");
     const fieldset = this.shadowRoot.querySelector("fieldset");
 
+    const form = this.closest("form");
+
+    form.addEventListener("reset", (_) => {
+      if (form != null) {
+        input.value = "";
+        label.classList.remove("label-focused");
+        legend.classList.remove("legend-focused");
+        fieldset.classList.remove("fieldset-focused");
+      }
+    });
+
     input.addEventListener("focusin", () => {
       label.classList.add("label-focused");
       legend.classList.add("legend-focused");
