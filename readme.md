@@ -129,8 +129,12 @@ Here’s how to use **My Design** in your project:
    cd custom-elements
    ```
 
-2. Include the library in your project:  
+2. Include the Material Icons library and the custom elements script in your project, add the following code to the `<head>` and `<body>` sections of your HTML:
    ```html
+   <!-- Add this in the <head> section to import Material Icons -->
+   <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+
+   <!-- Add this before the closing </body> tag to include the custom elements script -->
    <script src="custom-elements.js"></script>
    ```
 
